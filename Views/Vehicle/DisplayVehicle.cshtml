@@ -1,0 +1,43 @@
+@model Vehicle
+@using automanager.Extensions
+@{
+    ViewData["Title"] = $"{Model.Name} ({Model.LicensePlate})";
+}
+
+<a asp-controller="Home" asp-action="Index" class="btn btn-primary mb-3">Zurück zur übersicht</a>
+
+<h2>Tankvorgänge <a asp-action="FuelEntryForm" asp-route-id="@Model.Id" class="btn btn-primary float-right"><i class="fas fa-gas-pump"></i> Neuer Eintrag</a></h2>
+
+<table class="table">
+    <tr>
+        <th scope="col">Datum</th>
+        <th scope="col">Km</th>
+        <th scope="col">Liter</th>
+        <th scope="col">Preis</th>
+        <th scope="col">l/100km</th>
+        <th scope="col"></th>
+    </tr>
+
+@foreach(var e in Model.GasFillingEntries.OrderBy(p => p.Kilometers))
+{
+    <tr>
+        <td>@e.Date.ToShortTimeString()</td>
+        <td>@e.Kilometers</td>
+        <td>@e.Liters.ToString("F2") l</td>
+        <td>@e.Price.ToString("F2") €</td>
+
+        @if(e.Partial)
+        {
+            <td colspan="2">Unvollständig</td>            
+        }
+        else
+        {
+            var s = e.GetStatistics();
+            
+            <td>@s.LiterPer100Km.ToString("F2") l/100km</td>
+            <td><a asp-action="DisplayFillingEntry" asp-route-id="@e.Id" class="btn btn-secondary"><i class="fas fa-info-circle"></i></a></td>
+        }
+    </tr>
+}
+
+</table>

@@ -1,0 +1,17 @@
+@model Vehicle
+@{
+    ViewData["Title"] = $"{Model.Name} löschen";
+}
+
+<div>
+    Wollen Sie das Fahrzeug <b>@Model.Name (@Model.LicensePlate)</b> wirklich löschen? Alle zusammenhängenden Daten und Statistiken werden unwiderruflich gelöscht!
+</div>
+
+<div>
+    <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+
+    <a asp-action="Index" class="btn btn-primary">Nein</a>
+    <button type="submit" class="btn btn-danger"><i class="fas fa-radiation"></i> Ja, sicher</button>
+
+    </form>
+</div>

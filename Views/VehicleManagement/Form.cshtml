@@ -1,0 +1,40 @@
+@model Vehicle
+
+@{
+    ViewData["Title"] = $"Fahrzeug {((Model == null) ? "erstellen" : "bearbeiten")}";
+}
+
+<form method="post">
+
+<div class="form-group">
+    <label asp-for="Name">Fahrzeugbezeichnung</label>
+    <input class="form-control" asp-for="Name" />
+</div>
+
+<div class="form-group">
+    <label asp-for="LicensePlate">Kennzeichen</label>
+    <input class="form-control" asp-for="LicensePlate" />
+</div>
+
+<div class="form-group">
+    <label asp-for="FuelName">Treibstoff-Name</label>
+    <input class="form-control" asp-for="FuelName" />
+</div>
+
+<div class="form-group">
+    <label asp-for="StartingKilometers">Km-Stand bei Beginn</label>
+    <input class="form-control" asp-for="StartingKilometers" />
+</div>
+
+<a asp-action="Index" class="btn btn-secondary">Zurück</a>
+
+@if(Model == null)
+{
+    <button type="submit" class="btn btn-primary" asp-action="Create">Erstellen</button>
+}
+else
+{
+    <button type="submit" class="btn btn-primary" asp-action="Update" asp-route-id="@Model.Id">Speichern</button>
+}
+
+</form>

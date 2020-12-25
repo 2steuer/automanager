@@ -1,0 +1,61 @@
+@model FuelStatistics
+@{
+    ViewData["Title"] = "Statistik für Tankfüllung";
+}
+
+<a asp-action="DisplayVehicle" asp-route-id="@Model.BaseEntry.VehicleId" class="btn btn-primary mb-3">Zurück zum Fahrzeug</a>
+
+<table class="table">
+    <tr>
+        <th scope="row">Datum</th>
+        <td>@Model.BaseEntry.Date</td>
+    </tr>
+    <tr>
+        <th scope="row">Zurückgelegte Strecke</th>
+        <td>@Model.DistanceKilometers km</td>
+    </tr>
+    <tr>
+        <th scope="row">Preis</th>
+        <td>@Model.Price.ToString("0.00") €</td>
+    </tr>
+    <tr>
+        <th scope="row">Menge</th>
+        <td>@Model.Liters.ToString("0.00") l</td>
+    </tr>
+    <tr>
+        <th scope="row">Liter / 100 km</th>
+        <td>@Model.LiterPer100Km.ToString("0.00") l/100km</td>
+    </tr>
+    <tr>
+        <th scope="row">Preis pro Liter</th>
+        <td>@Model.PricePerLiter.ToString("0.00") €/l</td>
+    </tr>
+    <tr>
+        <th scope="row">Preis pro km</th>
+        <td>@Model.PricePerKm.ToString("0.00") €/km</td>
+    </tr>
+</table>
+
+@if (Model.IncludedEntries.Count() > 0)
+{
+    <p>Die folgenden Tankvorgänge, bei denen nicht vollgetankt wurde, sind in der o.g. Statistik enthalten:</p>
+
+    <table class="table">
+        <tr>
+            <th scope="col">Datum</th>
+            <th scope="col">Km</th>
+            <th scope="col">Liter</th>
+            <th scope="col">Preis</th>
+        </tr>
+
+        @foreach (var item in Model.IncludedEntries)
+        {
+            <tr>
+                <td>@item.Date</td>
+                <td>@item.Kilometers</td>
+                <td>@item.Liters.ToString("0.00") l</td>
+                <td>@item.Price.ToString("0.00") €</td>
+            </tr>
+        }
+    </table>
+}

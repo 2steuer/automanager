@@ -1,0 +1,40 @@
+@model IEnumerable<Vehicle>
+
+@{
+    ViewData["Title"] = "Fahrzeuge verwalten";
+}
+
+<div class="text-right mb-2">
+    <a asp-action="Form" class="btn btn-primary">Neues Fahrzeug anlegen <i class="fas fa-plus"></i></a>
+</div>
+@if (Model.Count() > 0)
+{
+    <table class="table">
+
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Kennzeichen</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var v in Model)
+            {
+                <tr>
+                    <td>@v.Name</td>
+                    <td>@v.LicensePlate</td>
+                    <td>
+                        <a asp-action="Form" asp-route-id="@v.Id" class="btn btn-secondary"><i class="fas fa-edit"></i></a>
+                        <a asp-action="DeleteForm" asp-route-id="@v.Id" class="btn btn-secondary"><i class="fas fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Es gibt noch keine Fahrzeuge. :-(</p>
+}
