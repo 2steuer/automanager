@@ -34,24 +34,23 @@ namespace automanager
                  opts.UseLazyLoadingProxies();
             });
 
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                List<CultureInfo> supportedCultures = new List<CultureInfo>
-                {
-                    new CultureInfo("de-DE"),
-                };
-
-                options.DefaultRequestCulture = new RequestCulture("de-DE");
-                options.SupportedCultures = supportedCultures;
-                options.SupportedUICultures = supportedCultures;
-            });
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, CarManagerDatabase db)
         {
             app.UsePathBase(Configuration["PathBase"]);
+            var supportedCultures = new string[] { "de-DE" };
+            app.UseRequestLocalization(options =>
+                        options
+                        .AddSupportedCultures(supportedCultures)
+                        .AddSupportedUICultures(supportedCultures)
+                        .SetDefaultCulture("de-DE")
+                        .RequestCultureProviders.Insert(0, new CustomRequestCultureProvider(context =>
+                        {
+                            return Task.FromResult(new ProviderCultureResult("de-DE"));
+                        }))
+                );
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
