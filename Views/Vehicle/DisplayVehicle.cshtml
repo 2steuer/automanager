@@ -28,49 +28,53 @@
 
         @if(e.Partial)
         {
-            <td colspan="2">Unvollständig</td>            
+            <td>Unvollständig</td>
+            <td><a asp-action="EditFuelEntry" asp-route-id="@e.Id" class="btn btn-secondary"><i class="fas fa-edit"></i></a></td>
         }
         else
         {
             var s = e.GetStatistics();
             
             <td>@s.LiterPer100Km.ToString("F2") l/100km</td>
-            <td><a asp-action="DisplayFillingEntry" asp-route-id="@e.Id" class="btn btn-secondary"><i class="fas fa-info-circle"></i></a></td>
+            <td><a asp-action="DisplayFillingEntry" asp-route-id="@e.Id" class="btn btn-secondary"><i class="fas fa-info-circle"></i></a>
+            <a asp-action="EditFuelEntry" asp-route-id="@e.Id" class="btn btn-secondary"><i class="fas fa-edit"></i></a></td>
         }
     </tr>
 }
 
 </table>
 
-<h2>Gesamtstatistik</h2>
+@if (Model.GasFillingEntries.Where(g => !g.Partial).Count() > 0)
+{
+    <h2>Gesamtstatistik</h2>
 
-@{
     var statistics = Model.GasFillingEntries.Where(g => !g.Partial).Select(g => g.GetStatistics());
     var totalKm = statistics.Sum(s => s.DistanceKilometers);
     var totalFuel = statistics.Sum(s => s.Liters);
     var totalPrice = statistics.Sum(s => s.Price);
     var totalAvg = (totalFuel / totalKm) * 100;
     var totalPricePerKm = totalPrice / totalKm;
+    
+    <table class="table">
+        <tr>
+            <th scope="row">Gesamt Km</th>
+            <td>@totalKm</td>
+        </tr>
+        <tr>
+            <th scope="row">Gesamt getankt</th>
+            <td>@totalFuel.ToString("0.00") l</td>
+        </tr>
+        <tr>
+            <th scope="row">Gesamt Preis</th>
+            <td>@totalPrice.ToString("0.00") €</td>
+        </tr>
+        <tr>
+            <th scope="row">Durchschn. l/100km</th>
+            <td>@totalAvg.ToString("0.00") l/100km</td>
+        </tr>
+        <tr>
+            <th scope="row">Durchschn. €/km</th>
+            <td>@totalPricePerKm.ToString("0.00") €/km</td>
+        </tr>
+    </table>
 }
-<table class="table">
-    <tr>
-        <th scope="row">Gesamt Km</th>
-        <td>@totalKm</td>
-    </tr>
-    <tr>
-        <th scope="row">Gesamt getankt</th>
-        <td>@totalFuel.ToString("0.00") l</td>
-    </tr>
-    <tr>
-        <th scope="row">Gesamt Preis</th>
-        <td>@totalPrice.ToString("0.00") €</td>
-    </tr>
-    <tr>
-        <th scope="row">Durchschn. l/100km</th>
-        <td>@totalAvg.ToString("0.00") l/100km</td>
-    </tr>
-    <tr>
-        <th scope="row">Durchschn. €/km</th>
-        <td>@totalPricePerKm.ToString("0.00") €/km</td>
-    </tr>
-</table>

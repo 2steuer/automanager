@@ -14,7 +14,7 @@
     </script>
 }
 
-<form asp-action="SaveFuelEntry" method="post">
+<form>
     <input type="hidden" name="VehicleId" value="@ViewBag.VehicleId" />
 
     <div class="form-group">
@@ -38,5 +38,13 @@
     </div>
 
     <a asp-action="DisplayVehicle" asp-route-id="@ViewBag.VehicleId" class="btn btn-secondary">Zurück zum Fahrzeug</a>
-    <button type="submit" class="btn btn-primary">Speichern</button>
+
+    @if (Model == null)
+    {
+        <button type="submit" class="btn btn-primary" asp-action="SaveFuelEntry" formmethod="post">Speichern</button>
+    }
+    else
+    {
+        <button type="submit" class="btn btn-primary" asp-action="SaveEditFuelEntry" asp-route-id="@Model.Id" formmethod="post">Speichern</button>
+    }
 </form>
