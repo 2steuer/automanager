@@ -2,8 +2,8 @@
 
 @{
     ViewData["Title"] = "Fahrzeuge verwalten";
-    var maxDisplayOrder = Model.Max(m => m.DisplayOrder);
-    var minDisplayOrder = Model.Min(m => m.DisplayOrder);
+    var maxDisplayOrder = Model.Count() > 0 ?  Model.Max(m => m.DisplayOrder) : 0;
+    var minDisplayOrder = Model.Count() > 0 ? Model.Min(m => m.DisplayOrder) : 0;
 }
 
 <div class="text-right mb-2">
