@@ -27,6 +27,16 @@
                     <td>@v.LicensePlate</td>
                     <td>
                         <a asp-action="Form" asp-route-id="@v.Id" class="btn btn-secondary"><i class="fas fa-edit"></i></a>
+                        <a asp-action="ToggleVisibility" asp-route-id="@v.Id" class="btn btn-secondary">
+                            @if (v.Visible)
+                            {
+                                <i class="fas fa-eye"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-eye-slash"></i>
+                            }
+                        </a>
                         <a asp-action="DeleteForm" asp-route-id="@v.Id" class="btn btn-secondary"><i class="fas fa-trash"></i></a>
                     </td>
                 </tr>

@@ -21,7 +21,7 @@
 @foreach(var e in Model.GasFillingEntries.OrderBy(p => p.Kilometers))
 {
     <tr>
-        <td>@e.Date.ToShortTimeString()</td>
+        <td>@e.Date.ToShortDateString()</td>
         <td>@e.Kilometers</td>
         <td>@e.Liters.ToString("F2") l</td>
         <td>@e.Price.ToString("F2") €</td>

@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using automanager.Database;
 
 namespace automanager.Migrations
 {
     [DbContext(typeof(CarManagerDatabase))]
-    partial class CarManagerDatabaseModelSnapshot : ModelSnapshot
+    [Migration("20201228094908_VehicleVisibility")]
+    partial class VehicleVisibility
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

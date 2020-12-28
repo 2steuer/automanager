@@ -24,6 +24,16 @@ namespace automanager.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> ToggleVisibility(long id)
+        {
+            var v = await _db.Vehicles.FindAsync(id);
+            v.Visible = !v.Visible;
+            await _db.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
         public IActionResult Form(long? id)
         {
             if (id != null)
