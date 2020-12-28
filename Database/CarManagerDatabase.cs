@@ -19,5 +19,11 @@ namespace automanager.Database
         {
             base.OnModelCreating(b);
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+
+        }
+
     }
 }
