@@ -23,7 +23,7 @@ namespace automanager.Controllers
 
         public IActionResult Index()
         {
-            return View(_db.Vehicles.Where(v => v.Visible));
+            return View(_db.Vehicles.Where(v => v.Visible).OrderBy(v => v.DisplayOrder));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

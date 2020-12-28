@@ -12,6 +12,8 @@ namespace automanager.Models.Database
 
         public bool Visible { get; set; } = true;
 
+        public int DisplayOrder { get; set; }
+
         public virtual ICollection<GasFillingEntry> GasFillingEntries { get; set; }
     }
 }

@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Fahrzeuge verwalten";
+    var maxDisplayOrder = Model.Max(m => m.DisplayOrder);
+    var minDisplayOrder = Model.Min(m => m.DisplayOrder);
 }
 
 <div class="text-right mb-2">
@@ -13,6 +15,7 @@
 
         <thead class="thead-dark">
             <tr>
+                <th scope="col"></th>
                 <th scope="col">Name</th>
                 <th scope="col">Kennzeichen</th>
                 <th scope="col"></th>
@@ -23,6 +26,16 @@
             @foreach (var v in Model)
             {
                 <tr>
+                    <td>
+                        @if (v.DisplayOrder > minDisplayOrder)
+                        {
+                            <a asp-action="MoveUp" asp-route-id="@v.Id" class="btn btn-link"><i class="fas fa-chevron-up"></i></a>
+                        }
+                        @if (v.DisplayOrder < maxDisplayOrder)
+                        {
+                            <a asp-action="MoveDown" asp-route-id="@v.Id" class="btn btn-link"><i class="fas fa-chevron-down"></i></a>
+                        }
+                    </td>
                     <td>@v.Name</td>
                     <td>@v.LicensePlate</td>
                     <td>
