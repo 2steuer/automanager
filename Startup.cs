@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using automanager.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,6 +33,19 @@ namespace automanager
                  opts.UseSqlite("Data Source=tanken.db");
                  opts.UseLazyLoadingProxies();
             });
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                List<CultureInfo> supportedCultures = new List<CultureInfo>
+                {
+                    new CultureInfo("de-DE"),
+                };
+
+                options.DefaultRequestCulture = new RequestCulture("de-DE");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
