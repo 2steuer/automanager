@@ -18,7 +18,7 @@
         <th scope="col"></th>
     </tr>
 
-@foreach(var e in Model.GasFillingEntries.OrderBy(p => p.Kilometers))
+@foreach(var e in Model.GasFillingEntries.OrderByDescending(p => p.Kilometers))
 {
     <tr>
         <td>@e.Date.ToShortDateString()</td>
