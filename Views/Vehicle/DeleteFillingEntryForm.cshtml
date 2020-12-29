@@ -1,0 +1,17 @@
+@model GasFillingEntry
+@{
+    ViewData["Title"] = $"Tankvorgang löschen";
+}
+
+<div>
+    Wollen Sie den Tankvorgang bei <b>@Model.Kilometers km (@Model.Liters.ToString("F2") l)</b> wirklich löschen?
+</div>
+
+<div>
+    <form asp-action="DeleteFillingEntry" asp-route-id="@Model.Id" method="post">
+
+    <a asp-action="DisplayVehicle" asp-route-id="@Model.VehicleId" class="btn btn-primary">Nein</a>
+    <button type="submit" class="btn btn-danger"><i class="fas fa-radiation"></i> Ja, sicher</button>
+
+    </form>
+</div>

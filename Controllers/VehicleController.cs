@@ -61,6 +61,7 @@ namespace automanager.Controllers
         public async Task<IActionResult> EditFuelEntry(long id)
         {
             var gfe = await _db.FillingEntries.FindAsync(id);
+            ViewBag.VehicleId = gfe.VehicleId;
             return View("FuelEntryForm", gfe);
         }
 
@@ -72,6 +73,23 @@ namespace automanager.Controllers
             await TryUpdateModelAsync(gfe);
             await _db.SaveChangesAsync();
             return RedirectToAction(nameof(DisplayVehicle), new {Id = gfe.VehicleId});
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteFillingEntryForm(long id)
+        {
+            return View(await _db.FillingEntries.FindAsync(id));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteFillingEntry(long id)
+        {
+            var gfe = await _db.FillingEntries.FindAsync(id);
+            var vid = gfe.VehicleId;
+            _db.Remove(gfe);
+            await _db.SaveChangesAsync();
+
+            return RedirectToAction(nameof(DisplayVehicle), new {id = vid});
         }
 
         [HttpGet]

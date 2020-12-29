@@ -24,19 +24,26 @@
         <td>@e.Kilometers</td>
         <td>@e.Liters.ToString("F2") l</td>
 
-        @if(e.Partial)
+        @if (e.Partial)
         {
             <td>Unvollständig</td>
-            <td><a asp-action="EditFuelEntry" asp-route-id="@e.Id" class="btn btn-secondary"><i class="fas fa-edit"></i></a></td>
         }
         else
         {
             var s = e.GetStatistics();
-            
+        
             <td>@s.LiterPer100Km.ToString("F2") l/100km</td>
-            <td><a asp-action="DisplayFillingEntry" asp-route-id="@e.Id" class="btn btn-secondary"><i class="fas fa-info-circle"></i></a>
-            <a asp-action="EditFuelEntry" asp-route-id="@e.Id" class="btn btn-secondary"><i class="fas fa-edit"></i></a></td>
         }
+        
+        <td>
+            @if (!e.Partial)
+            {
+                <a asp-action="DisplayFillingEntry" asp-route-id="@e.Id" class="btn btn-secondary"><i class="fas fa-info-circle"></i></a>
+            }
+            
+            <a asp-action="EditFuelEntry" asp-route-id="@e.Id" class="btn btn-secondary"><i class="fas fa-edit"></i></a>
+            <a asp-action="DeleteFillingEntryForm" asp-route-id="@e.Id" class="btn btn-secondary"><i class="fas fa-trash"></i></a>
+        </td>
     </tr>
 }
 
