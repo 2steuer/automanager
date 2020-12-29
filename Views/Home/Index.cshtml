@@ -1,4 +1,5 @@
-﻿@{
+﻿@using automanager.Extensions
+@{
     ViewData["Title"] = "Fahrzeugliste";
 }
 @model IEnumerable<Vehicle>
@@ -20,7 +21,31 @@
             </div>
             <div class="collapse" id="collapse-vehicle-@v.Id">
                 <div class="card-body">
-                    Dies sind spannende informationen über das ausgewählte Fahrzeug!
+                    @if (v.GasFillingEntries.Count() > 0)
+                    {
+                        var km = v.GasFillingEntries.Max(gfe => gfe.Kilometers) - v.StartingKilometers;
+                        var lastusage = v.GasFillingEntries.Where(gfe => !gfe.Partial).OrderByDescending(gfe => gfe.Kilometers)
+                            .FirstOrDefault();
+
+                        <table class="table">
+                            <tr>
+                                <th scope="row">Erfasste Fahrstrecke</th>
+                                <td>@km km</td>
+                            </tr>
+
+                            @if (lastusage != null)
+                            {
+                                <tr>
+                                    <th scope="row">Letzter erfasster Verbrauch</th>
+                                    <td>@lastusage.GetStatistics().LiterPer100Km.ToString("F2") l/100km</td>
+                                </tr>
+                            }
+                        </table>
+                    }
+                    else
+                    {
+                        <span>Es ist noch keine Statistik für dieses Fahrzeug erfasst.</span>
+                    }
                 </div>
             </div>
         }
