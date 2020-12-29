@@ -13,7 +13,6 @@
         <th scope="col">Datum</th>
         <th scope="col">Km</th>
         <th scope="col">Liter</th>
-        <th scope="col">Preis</th>
         <th scope="col">l/100km</th>
         <th scope="col"></th>
     </tr>
@@ -24,7 +23,6 @@
         <td>@e.Date.ToShortDateString()</td>
         <td>@e.Kilometers</td>
         <td>@e.Liters.ToString("F2") l</td>
-        <td>@e.Price.ToString("F2") €</td>
 
         @if(e.Partial)
         {
