@@ -1,0 +1,14 @@
+@{
+    ViewData["Title"] = "Login";
+}
+
+<form asp-action="Index" method="GET">
+    <div class="form-group">
+        <label for="accessCode">Bitte den Zugangscode eingeben</label>
+        <input name="accessCode" id="accessCode" class="form-control" type="password" />
+    </div>
+
+    <div class="form-group">
+        <button class="form-control btn btn-primary" type="submit">Los!</button>
+    </div>
+</form>

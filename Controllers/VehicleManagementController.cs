@@ -4,9 +4,11 @@ using automanager.Models.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace automanager.Controllers
 {
+    [Authorize]
     public class VehicleManagementController : Controller
     {
         private readonly CarManagerDatabase _db;

@@ -4,6 +4,8 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using automanager.Database;
+using automanager.Middleware;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,6 +36,17 @@ namespace automanager
                  opts.UseLazyLoadingProxies();
             });
 
+            services.AddAuthentication(nameof(AccessCodeAuthenticationHandler))
+                .AddScheme<AccessCodeAuthenticationHandlerOptions, AccessCodeAuthenticationHandler>(nameof(AccessCodeAuthenticationHandler), opts => {
+                    opts.AccessCode = Configuration["AccessCode"];
+                });
+
+            services.AddDistributedMemoryCache();
+            services.AddSession(opts => {
+                opts.IdleTimeout = TimeSpan.FromHours(1);
+                opts.Cookie.IsEssential = true;
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +66,7 @@ namespace automanager
                 );
             if (env.IsDevelopment())
             {
+                
                 app.UseDeveloperExceptionPage();
             }
             else
@@ -60,11 +74,13 @@ namespace automanager
                 app.UseExceptionHandler("/Home/Error");
                 db.Database.Migrate();
             }
-            
+
             app.UseStaticFiles();
-            
             app.UseRouting();
 
+            app.UseSession();
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

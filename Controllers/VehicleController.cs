@@ -9,9 +9,11 @@ using System.Collections.Generic;
 using System.Linq;
 using automanager.Models;
 using automanager.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace automanager.Controllers
 {
+    [Authorize]
     public class VehicleController : Controller
     {
         private CarManagerDatabase _db;
