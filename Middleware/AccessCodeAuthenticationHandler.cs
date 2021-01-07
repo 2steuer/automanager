@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 
 namespace automanager.Middleware
 {
@@ -17,12 +18,14 @@ namespace automanager.Middleware
     public class AccessCodeAuthenticationHandler
         : AuthenticationHandler<AccessCodeAuthenticationHandlerOptions>
     {
-        public AccessCodeAuthenticationHandler(IOptionsMonitor<AccessCodeAuthenticationHandlerOptions> options,
+        private IConfiguration _cfg;
+        public AccessCodeAuthenticationHandler(IConfiguration configuration, IOptionsMonitor<AccessCodeAuthenticationHandlerOptions> options,
             ILoggerFactory logger,
             UrlEncoder encoder,
             ISystemClock clock)
             : base(options, logger, encoder, clock)
         {
+            _cfg = configuration;
         }
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
@@ -56,7 +59,7 @@ namespace automanager.Middleware
 
         protected override Task HandleChallengeAsync(AuthenticationProperties properties)
         {
-            Context.Response.Redirect("/Home/Login");
+            Context.Response.Redirect($"{_cfg["PathBase"]}/Home/Login");
             return Task.CompletedTask;
         }
     }
